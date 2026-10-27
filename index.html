@@ -1,11 +1,84 @@
 <!DOCTYPE html>
+<!-- ↑ このファイルが HTML5 で書かれていることをブラウザに伝える宣言 -->
+
+<!-- html: ページ全体を包むいちばん外側のタグ。lang="ja" で「日本語のページ」と伝える -->
 <html lang="ja">
+
+<!-- head: 画面には表示されない「ページの設定情報」を書く場所 -->
 <head>
+    <!-- meta charset: 文字コードを UTF-8 に指定（日本語の文字化けを防ぐ） -->
     <meta charset="UTF-8">
+    <!-- meta viewport: スマホで見たときに画面幅に合わせて表示する設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- title: ブラウザのタブに表示されるページのタイトル -->
     <title>さくのポートフォリオ</title>
 </head>
+
+<!-- body: 実際に画面に表示される内容を書く場所 -->
 <body>
-    <h1>さくのポートフォリオ</h1>
-    <p>Webプログラミングを勉強中です。</p>
+
+    <!-- header: ページの一番上の部分（サイト名やメニュー） -->
+    <header>
+        <!-- h1: ページで一番大きな見出し。1ページに1つが基本 -->
+        <h1>さくのポートフォリオ</h1>
+
+        <!-- nav: ページ内を移動するためのメニュー（ナビゲーション） -->
+        <nav>
+            <!-- ul: 順番のない箇条書きリスト -->
+            <ul>
+                <!-- li: リストの1項目 / a: リンク。href="#about" で id="about" の場所へ移動 -->
+                <li><a href="#about">自己紹介</a></li>
+                <li><a href="#works">作品</a></li>
+                <li><a href="#contact">連絡先</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- main: このページのメインの内容。1ページに1つだけ使う -->
+    <main>
+
+        <!-- section: 内容のまとまり（章）。id="about" はメニューのリンク先の目印 -->
+        <section id="about">
+            <!-- h2: セクションの見出し（h1 の次に大きい見出し） -->
+            <h2>自己紹介</h2>
+            <!-- p: 段落（ひとまとまりの文章） -->
+            <p>はじめまして、さくです！UIUXデザイナー、デザインエンジニアを目指しています。<br> 
+                芝浦工業大学デザイン工学部の3年生で、UIUXやプログラミング、ビジネスなど幅広く学んでいます！</p>
+            <p>Webプログラミングを勉強中です。HTML / CSS / JavaScript を中心に学んでいます。</p>
+        </section>
+
+        <!-- 作品セクション -->
+        <section id="works">
+            <h2>作品</h2>
+
+            <!-- article: それだけで意味が完結する内容（ここでは作品1つ分） -->
+            <article>
+                <!-- h3: h2 の下に入る小見出し -->
+                <h3>ポートフォリオサイト</h3>
+                <p>今見ているこのサイトです。素の HTML で作りました。</p>
+            </article>
+
+            <article>
+                <h3>作品2（準備中）</h3>
+                <p>これから作る作品をここに追加します。</p>
+            </article>
+        </section>
+
+        <!-- 連絡先セクション -->
+        <section id="contact">
+            <h2>連絡先</h2>
+            <p>お気軽にご連絡ください！</p>
+            <!-- a href="mailto:..." : クリックするとメールソフトが開くリンク -->
+            <p>メール：<a href="mailto:example@example.com">example@example.com</a></p>
+        </section>
+
+    </main>
+
+    <!-- footer: ページの一番下の部分（著作権表示など） -->
+    <footer>
+        <!-- small: 注意書きや著作権表示など「小さな補足」に使うタグ / &copy; は © 記号 -->
+        <p><small>&copy; 2026 さく</small></p>
+    </footer>
+
 </body>
 </html>
