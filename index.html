@@ -57,16 +57,37 @@
         <section id="works">
             <h2>作品</h2>
 
+            <!-- div: 意味を持たないただの箱。ここでは絞り込みボタンをまとめるために使う -->
+            <div class="filter">
+                <!-- data-filter: 「このボタンはどのカテゴリを表示するか」を書いておく自作のメモ欄 -->
+                <!-- class="is-active" は「今選ばれているボタン」の目印。最初は「すべて」 -->
+                <button type="button" class="is-active" data-filter="all">すべて</button>
+                <button type="button" data-filter="web">Web</button>
+                <button type="button" data-filter="design">デザイン</button>
+                <button type="button" data-filter="other">その他</button>
+            </div>
+
             <!-- article: それだけで意味が完結する内容（ここでは作品1つ分） -->
-            <article>
+            <!-- data-category: 「この作品のカテゴリ」を書いておく自作のメモ欄 -->
+            <article data-category="web">
                 <!-- h3: h2 の下に入る小見出し -->
                 <h3>ポートフォリオサイト</h3>
-                <p>今見ているこのサイトです。素の HTML で作りました。</p>
+                <p>今見ているこのサイトです。素の HTML / CSS / JavaScript で作りました。</p>
             </article>
 
-            <article>
-                <h3>作品2（準備中）</h3>
-                <p>これから作る作品をここに追加します。</p>
+            <article data-category="web">
+                <h3>カフェのWebサイト（ダミー）</h3>
+                <p>架空のカフェの紹介サイト。Web カテゴリの例です。</p>
+            </article>
+
+            <article data-category="design">
+                <h3>アプリのUIデザイン（ダミー）</h3>
+                <p>家計簿アプリの画面デザイン。デザイン カテゴリの例です。</p>
+            </article>
+
+            <article data-category="other">
+                <h3>写真作品（ダミー）</h3>
+                <p>街の風景を撮った写真。その他 カテゴリの例です。</p>
             </article>
         </section>
 
