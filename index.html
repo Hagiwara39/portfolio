@@ -34,6 +34,10 @@
                 <li><a href="#contact">連絡先</a></li>
             </ul>
         </nav>
+
+        <!-- button: 押せるボタン。type="button" は「フォーム送信ではないただのボタン」という意味 -->
+        <!-- id="theme-toggle" は、JavaScript からこのボタンを見つけるための目印 -->
+        <button type="button" id="theme-toggle">ダークモードにする</button>
     </header>
 
     <!-- main: このページのメインの内容。1ページに1つだけ使う -->
@@ -81,6 +85,10 @@
         <!-- small: 注意書きや著作権表示など「小さな補足」に使うタグ / &copy; は © 記号 -->
         <p><small>&copy; 2026 さく</small></p>
     </footer>
+
+    <!-- script: JavaScript ファイルを読み込むタグ -->
+    <!-- body の一番最後に置くと、上の HTML（ボタンなど）が全部読み込まれてから JS が動く -->
+    <script src="script.js"></script>
 
 </body>
 </html>
