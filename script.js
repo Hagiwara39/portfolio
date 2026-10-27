@@ -17,6 +17,6 @@ themeButton.addEventListener("click", function () {
     if (isDark) {
         themeButton.textContent = "ライトモードにする";
     } else {
-        themeButton.textContent = "ダークモードにする";
+        themeButton.textContent = "赤瓦モードにする";
     }
 });

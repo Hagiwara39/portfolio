@@ -151,7 +151,7 @@ nav ul {
 /* body.dark: 「class に dark が付いている body」という意味 */
 body.dark {
     /* 背景を暗いグレーに。真っ黒(#000)より少し明るいほうが目が疲れにくい */
-    background-color: #1e1e1e;
+    background-color: #b55233;
     /* 文字を明るいグレーに。真っ白より少し落とすとまぶしくない */
     color: #e0e0e0;
 }
