@@ -12,5 +12,5 @@
 - git の add / commit / push は自分でやるので実行しない
 
 ## 技術
-- 今は素の HTML / CSS / JavaScript だけを使う（フレームワークは使わない）
-- ファイル構成: index.html, style.css, script.js
+- Vite + React（JavaScript）で作る。TypeScript はまだ使わない
+- スタイルは今の style.css を活かす

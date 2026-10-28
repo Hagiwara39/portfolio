@@ -157,12 +157,6 @@ nav ul {
     border-color: #333;
 }
 
-/* JS で is-hidden クラスが付いたカードは表示しない */
-#works article.is-hidden {
-    /* display: none は「無いもの」として扱う。Grid のマスも詰められる */
-    display: none;
-}
-
 
 /* ===========================================
    ダークモード切替ボタン
@@ -181,7 +175,7 @@ nav ul {
 /* body.dark: 「class に dark が付いている body」という意味 */
 body.dark {
     /* 背景を暗いグレーに。真っ黒(#000)より少し明るいほうが目が疲れにくい */
-    background-color: #b55233;
+    background-color: #1e1e1e;
     /* 文字を明るいグレーに。真っ白より少し落とすとまぶしくない */
     color: #e0e0e0;
 }
