@@ -8,7 +8,7 @@ const works = [
     // title: 作品のタイトル（カードの h3 に入る）
     title: 'ポートフォリオサイト',
     // description: 作品の説明（カードの p に入る）
-    description: '今見ているこのサイトです。素の HTML / CSS / JavaScript で作りました。',
+    description: '最初は素のHTML/CSS/JSで作り、Vite + Reactで作り直しました。',
     // category: 作品のカテゴリ（"web" / "design" / "other"）。ステップ8の絞り込みで使う
     category: 'web',
   },
