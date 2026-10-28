@@ -1,5 +1,10 @@
-// Header: ページの一番上の部分（サイト名・メニュー・赤瓦モードボタン）
-function Header() {
+// Header: ページの一番上の部分（サイト名・メニュー・ダークモードボタン）
+// isDark: 今ダークモードかどうか / onToggleTheme: ボタンが押されたときの処理（どちらも App から受け取る）
+function Header({ isDark, onToggleTheme }) {
+  // ボタンの文字は「次に押したら何になるか」にする
+  // 条件 ? A : B は「条件が true なら A、false なら B」という書き方
+  const buttonText = isDark ? 'ライトモードにする' : 'ダークモードにする'
+
   return (
     // header: ページの一番上の部分（サイト名やメニュー）
     <header>
@@ -19,7 +24,8 @@ function Header() {
 
       {/* button: 押せるボタン。type="button" は「フォーム送信ではないただのボタン」という意味 */}
       {/* id="theme-toggle" は、CSS でこのボタンの余白を指定するための目印 */}
-      <button type="button" id="theme-toggle">赤瓦モードにする</button>
+      {/* onClick: クリックされたら、App から受け取った onToggleTheme を実行する */}
+      <button type="button" id="theme-toggle" onClick={onToggleTheme}>{buttonText}</button>
     </header>
   )
 }
