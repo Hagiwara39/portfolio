@@ -1,3 +1,7 @@
+// 作品の一覧データと、カード1枚分の部品を読み込む
+import works from '../data/works.js'
+import WorkCard from './WorkCard.jsx'
+
 // Works: 作品セクション（絞り込みボタンと作品カード）
 function Works() {
   return (
@@ -17,28 +21,15 @@ function Works() {
         <button type="button" data-filter="other">その他</button>
       </div>
 
-      {/* article: それだけで意味が完結する内容（ここでは作品1つ分） */}
-      {/* data-category: 「この作品のカテゴリ」を書いておく自作のメモ欄 */}
-      <article data-category="web">
-        {/* h3: h2 の下に入る小見出し */}
-        <h3>ポートフォリオサイト</h3>
-        <p>今見ているこのサイトです。素の HTML / CSS / JavaScript で作りました。</p>
-      </article>
-
-      <article data-category="web">
-        <h3>カフェのWebサイト（ダミー）</h3>
-        <p>架空のカフェの紹介サイト。Web カテゴリの例です。</p>
-      </article>
-
-      <article data-category="design">
-        <h3>アプリのUIデザイン（ダミー）</h3>
-        <p>家計簿アプリの画面デザイン。デザイン カテゴリの例です。</p>
-      </article>
-
-      <article data-category="other">
-        <h3>写真作品（ダミー）</h3>
-        <p>街の風景を撮った写真。その他 カテゴリの例です。</p>
-      </article>
+      {/* works の作品を1つずつ取り出して、WorkCard（カード1枚）に変えて並べる */}
+      {/* key: React がカードを見分けるための目印。作品ごとにちがう id を渡す */}
+      {works.map((work) => (
+        <WorkCard
+          key={work.id}
+          title={work.title}
+          description={work.description}
+        />
+      ))}
     </section>
   )
 }
