@@ -1,3 +1,6 @@
+// お問い合わせフォームの部品を読み込む
+import ContactForm from './ContactForm.jsx'
+
 // Contact: 連絡先セクション
 function Contact() {
   return (
@@ -7,6 +10,9 @@ function Contact() {
       <p>お気軽にご連絡ください！</p>
       {/* a href="mailto:..." : クリックするとメールソフトが開くリンク */}
       <p>メール：<a href="mailto:murayama.saku@gmail.com">murayama.saku@gmail.com</a></p>
+
+      {/* お問い合わせフォーム */}
+      <ContactForm />
     </section>
   )
 }
