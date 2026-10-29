@@ -15,6 +15,7 @@ UIUXデザイナー・デザインエンジニアを目指す、さくのポー�
 - Vite
 - JavaScript
 - CSS（Flexbox / Grid / メディアクエリ）
+- Supabase（データベース）
 
 最初は素の HTML / CSS / JavaScript で作り、そのあと Vite + React で作り直しました。
 
@@ -32,6 +33,11 @@ React の `useState` で「今ダークモードかどうか」を覚え、`body
 メディアクエリで、画面が狭いときの文字の大きさや余白を調整しています。
 作品カードは Grid の `auto-fill` で、画面の幅に合わせて列の数が自動で変わります。
 
+### お問い合わせフォーム
+連絡先のセクションにフォームを置き、送られた内容は Supabase の `messages` テーブルに保存しています。
+RLS（行レベルセキュリティ）で「送信（insert）だけ許可・読むのは不可」にして、他の人のお問い合わせが見えないようにしました。
+Supabase のキーは `.env.local` と Vercel の環境変数に置き、GitHub には上げていません。
+
 ## ファイル構成
 
 ```
@@ -41,11 +47,14 @@ src/
   App.jsx         … ページ全体の組み立てとダークモード
   style.css       … 見た目
   components/     … 画面の部品（ヘッダー・自己紹介・作品・連絡先・フッター）
+    ContactForm.jsx … お問い合わせフォーム
   data/works.js   … 作品の一覧データ
+  lib/supabase.js … Supabase につなぐための設定
 ```
 
 ## 今後やる予定
 
 - デザインの改善
 - 作品の追加
-- お問い合わせフォーム
+- 作品の詳細ページ（React Router）
+- TypeScript 化
