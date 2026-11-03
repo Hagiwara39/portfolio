@@ -119,8 +119,22 @@ nav ul {
     border: 1px solid #ddd;
     /* 角を少し丸くする */
     border-radius: 8px;
-    /* 枠線と中の文字のあいだの余白 */
+}
+
+/* カードの中のリンク: カード全体を押せるようにする */
+#works article a {
+    /* a は普段「文字の幅だけ」の要素なので、箱として扱ってカードいっぱいに広げる */
+    display: block;
+    /* 枠線と中の文字のあいだの余白。a に付けると、余白の部分も押せる範囲になる */
     padding: 20px;
+    /* リンクの青い文字と下線をやめて、ふつうの文章と同じ見た目にする */
+    color: inherit;
+    text-decoration: none;
+}
+
+/* カードにマウスを乗せたとき: 押せることがわかるように、タイトルに下線を出す */
+#works article a:hover h3 {
+    text-decoration: underline;
 }
 
 /* カードの中の見出し: 上の余白はカードの padding で足りるので消す */
@@ -131,6 +145,33 @@ nav ul {
 /* カードの中の文章: 下の余白もカードの padding で足りるので消す */
 #works article p {
     margin-bottom: 0;
+}
+
+
+/* ===========================================
+   作品の詳細ページ
+   =========================================== */
+
+/* 詳細ページ全体: 1行が長すぎると読みにくいので、最大の幅を決めておく */
+.work-detail {
+    max-width: 720px;
+}
+
+/* 「非公式の改善提案（学生の制作）」の注意書き: 小さい文字で枠を付けて目立たせる */
+.work-note {
+    /* 文字の幅だけの箱にする（横いっぱいに広がらない） */
+    display: inline-block;
+    font-size: 0.875rem;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    padding: 2px 8px;
+    /* すぐ下の h2 の上の余白(48px)があるので、ここでは上だけあける */
+    margin: 48px 0 0;
+}
+
+/* 注意書きのすぐ後ろの h2 は、注意書きとくっつくように上の余白を減らす */
+.work-note + h2 {
+    margin-top: 16px;
 }
 
 
@@ -272,8 +313,8 @@ body.dark #works article {
         padding: 8px 0;
     }
 
-    /* 作品カード: カードの内側の余白を少し減らす */
-    #works article {
+    /* 作品カード: カードの内側の余白を少し減らす（余白は中のリンクに付けている） */
+    #works article a {
         padding: 16px;
     }
 }

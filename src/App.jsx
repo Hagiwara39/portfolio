@@ -1,15 +1,18 @@
 // useState と useEffect は React に用意されている機能。使うために読み込む
 import { useState, useEffect } from 'react'
+// Routes と Route: URL によって表示するページを切り替えるための部品
+import { Routes, Route } from 'react-router-dom'
 
 // 部品（コンポーネント）を components フォルダから読み込む
 import Header from './components/Header.jsx'
-import About from './components/About.jsx'
-import Works from './components/Works.jsx'
-import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
+// ページを pages フォルダから読み込む
+import HomePage from './pages/HomePage.jsx'
+import WorkDetailPage from './pages/WorkDetailPage.jsx'
+
 // App: ページ全体を組み立てる部品（コンポーネント）
-// 中身はそれぞれの部品のファイルに分けて、ここでは並べる順番だけを決める
+// ヘッダーとフッターはどのページでも共通。真ん中（main）だけを URL で切り替える
 function App() {
   // isDark: 今ダークモードかどうか（true / false）を覚えておく「状態」
   // setIsDark: isDark を書き換えるための関数
@@ -40,9 +43,14 @@ function App() {
 
       {/* main: このページのメインの内容。1ページに1つだけ使う */}
       <main>
-        <About />
-        <Works />
-        <Contact />
+        {/* Routes: 中の Route のうち、今の URL に合うものを1つだけ表示する */}
+        <Routes>
+          {/* path="/" のとき（トップ）は HomePage を表示する */}
+          <Route path="/" element={<HomePage />} />
+          {/* :slug は「ここには作品ごとにちがう名前が入る」という目印 */}
+          {/* /works/mcflow も /works/portfolio も、このページで表示する */}
+          <Route path="/works/:slug" element={<WorkDetailPage />} />
+        </Routes>
       </main>
 
       <Footer />

@@ -56,6 +56,7 @@ function Works() {
       {visibleWorks.map((work) => (
         <WorkCard
           key={work.id}
+          slug={work.slug}
           title={work.title}
           description={work.description}
         />

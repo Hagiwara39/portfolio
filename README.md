@@ -12,6 +12,7 @@ UIUXデザイナー・デザインエンジニアを目指す、さくのポー�
 ## 使用技術
 
 - React
+- React Router（ページの切り替え）
 - Vite
 - JavaScript
 - CSS（Flexbox / Grid / メディアクエリ）
@@ -29,6 +30,11 @@ React の `useState` で「今ダークモードかどうか」を覚え、`body
 「すべて」「Web」「デザイン」「その他」のボタンで、作品をカテゴリごとに絞り込めます。
 作品の情報は `src/data/works.js` にまとめているので、作品を増やすときはこのファイルに書き足すだけで済みます。
 
+### 作品の詳細ページ
+作品カードを押すと、`/works/作品の名前`（例: `/works/mcflow`）の詳細ページに移動します。
+React Router で URL ごとに表示するページを切り替え、1つの詳細ページの部品で全作品を表示しています。
+Vercel で詳細ページの URL を直接開いても404にならないように、`vercel.json` で設定しています。
+
 ### スマホ対応
 メディアクエリで、画面が狭いときの文字の大きさや余白を調整しています。
 作品カードは Grid の `auto-fill` で、画面の幅に合わせて列の数が自動で変わります。
@@ -42,10 +48,14 @@ Supabase のキーは `.env.local` と Vercel の環境変数に置き、GitHub 
 
 ```
 index.html        … React を表示する土台の HTML
+vercel.json       … Vercel の設定（詳細ページを直接開いても404にしない）
 src/
   main.jsx        … React を画面に表示する入口
-  App.jsx         … ページ全体の組み立てとダークモード
+  App.jsx         … ページ全体の組み立て・URL によるページの切り替え・ダークモード
   style.css       … 見た目
+  pages/          … ページ（URL ごとに表示するもの）
+    HomePage.jsx  … トップページ（/）
+    WorkDetailPage.jsx … 作品の詳細ページ（/works/作品の名前）
   components/     … 画面の部品（ヘッダー・自己紹介・作品・連絡先・フッター）
     ContactForm.jsx … お問い合わせフォーム
   data/works.js   … 作品の一覧データ
@@ -56,5 +66,5 @@ src/
 
 - デザインの改善
 - 作品の追加
-- 作品の詳細ページ（React Router）
+- 作品の詳細ページの中身（課題・解決策・結果）を書く
 - TypeScript 化

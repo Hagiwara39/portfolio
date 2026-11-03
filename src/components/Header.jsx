@@ -1,3 +1,6 @@
+// Link: ページを移動するためのリンク（React Router 版の a タグ）
+import { Link } from 'react-router-dom'
+
 // Header: ページの一番上の部分（サイト名・メニュー・ダークモードボタン）
 // isDark: 今ダークモードかどうか / onToggleTheme: ボタンが押されたときの処理（どちらも App から受け取る）
 function Header({ isDark, onToggleTheme }) {
@@ -15,10 +18,12 @@ function Header({ isDark, onToggleTheme }) {
       <nav>
         {/* ul: 順番のない箇条書きリスト */}
         <ul>
-          {/* li: リストの1項目 / a: リンク。href="#about" で id="about" の場所へ移動 */}
-          <li><a href="#about">自己紹介</a></li>
-          <li><a href="#works">作品</a></li>
-          <li><a href="#contact">連絡先</a></li>
+          {/* li: リストの1項目 */}
+          {/* to="/#about": トップページ（/）の id="about" の場所へ移動。詳細ページからでもトップに戻れる */}
+          {/* a ではなく Link にすると、ページを読み込み直さないのでダークモードの状態が消えない */}
+          <li><Link to="/#about">自己紹介</Link></li>
+          <li><Link to="/#works">作品</Link></li>
+          <li><Link to="/#contact">連絡先</Link></li>
         </ul>
       </nav>
 

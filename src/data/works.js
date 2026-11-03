@@ -5,6 +5,9 @@ const works = [
   {
     // id: 作品ごとにちがう番号。React が「どのカードか」を見分けるのに使う
     id: 1,
+    // slug: URL に使う作品の名前（/works/portfolio の portfolio の部分）
+    // 英小文字・数字・ハイフンだけで、作品ごとにちがう名前にする
+    slug: 'portfolio',
     // title: 作品のタイトル（カードの h3 に入る）
     title: 'ポートフォリオサイト',
     // description: 作品の説明（カードの p に入る）
@@ -14,23 +17,13 @@ const works = [
   },
   {
     id: 2,
-    title: 'カフェのWebサイト（ダミー）',
-    description: '架空のカフェの紹介サイト。Web カテゴリの例です。',
-    category: 'web',
-  },
-  {
-    id: 3,
-    title: 'アプリのUIデザイン（ダミー）',
-    description: '家計簿アプリの画面デザイン。デザイン カテゴリの例です。',
+    slug: 'mcflow',
+    title: 'McFlow',
+    // note: 詳細ページの最初に表示する注意書き（必要な作品だけに書く）
+    note: '非公式の改善提案（学生の制作）',
+    description: 'マクドナルドのモバイルオーダーの非公式の改善提案（学生の制作）。いつものメニューを事前に登録して、注文までの操作を13回から5回に減らしました。',
     category: 'design',
   },
-  {
-    id: 4,
-    title: '写真作品（ダミー）',
-    description: '街の風景を撮った写真。その他 カテゴリの例です。',
-    category: 'other',
-  },
-
 ]
 
 // 他のファイル（Works.jsx）から works を使えるようにする
