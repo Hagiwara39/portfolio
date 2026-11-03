@@ -24,7 +24,7 @@ function WorkDetailPage() {
   if (!work) {
     return (
       <section className="work-detail">
-        <h2>作品が見つかりません</h2>
+        <h1>作品が見つかりません</h1>
         <Link to="/">トップに戻る</Link>
       </section>
     )
@@ -36,7 +36,8 @@ function WorkDetailPage() {
       {/* note がある作品だけ、最初に注意書きを出す */}
       {work.note && <p className="work-note">{work.note}</p>}
 
-      <h2>{work.title}</h2>
+      {/* h1: このページで一番大きな見出し。詳細ページでは作品名にする */}
+      <h1>{work.title}</h1>
       <p>{work.description}</p>
 
       {/* 中身はあとで書く。今は仮の文章 */}

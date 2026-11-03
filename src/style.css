@@ -48,8 +48,16 @@ body {
     font-family: "Inter", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
     /* 外側の余白。ブラウザが最初から付けている 8px を消す */
     margin: 0;
-    /* 内側の余白。上下 32px・左右 64px あけて、広めにゆったり見せる */
-    padding: 32px 64px;
+    /* 内側の余白。左右 64px あけて、広めにゆったり見せる */
+    /* 上は「固定ヘッダーの高さ 72px + 32px」。ヘッダーの下に中身が隠れないようにする */
+    padding: 104px 64px 32px;
+}
+
+/* id の付いた section（About / Works / Contact）: メニューで移動したときに止まる位置を調整する */
+/* scroll-margin-top: 「ここまでスクロールして」と言われたとき、上にこの分だけすき間を残す */
+/* 固定ヘッダー(72px)の下に見出しが隠れないよう、ヘッダーより少し大きくする */
+section[id] {
+    scroll-margin-top: 96px;
 }
 
 /* リンクの色 */
@@ -109,15 +117,60 @@ small {
 
 
 /* ===========================================
-   ヘッダーのメニュー（Flexbox で横並び）
+   ヘッダー（上に固定・Flexbox で横並び）
    =========================================== */
+
+/* ヘッダー全体: ロゴ・メニュー・ボタンを横一列に並べる */
+.site-header {
+    /* position: fixed: 画面に貼り付けて、スクロールしても動かないようにする */
+    position: fixed;
+    /* 画面の上・左・右の端にくっつける（横いっぱいに広がる） */
+    top: 0;
+    left: 0;
+    right: 0;
+    /* z-index: 重なりの順番。大きいほど手前。中身がヘッダーの上に重ならないようにする */
+    z-index: 10;
+    height: 72px;
+    /* 中身を横に並べ、上下のまん中にそろえる */
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    /* 左右の余白はページ（body）とそろえる */
+    padding: 0 64px;
+    /* 背景を塗っておかないと、下の文字が透けて見える */
+    background-color: var(--color-bg);
+    /* 下に薄いグレーの線 */
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* ロゴ（月の画像と名前）: 画像と文字を横に並べる */
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* リンクの青色と下線をやめる */
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ロゴの画像: 高さを 30px にする。幅は auto で、縦横の比率を保ったまま決まる */
+.site-logo img {
+    height: 30px;
+    width: auto;
+}
+
+/* nav: margin-left: auto で左側の余白を全部もらい、メニューとボタンを右に寄せる */
+.site-header nav {
+    margin-left: auto;
+}
 
 /* nav の中の ul: メニュー項目を並べる箱 */
 nav ul {
     /* Flexbox を使う宣言。中の li が横一列に並ぶようになる */
     display: flex;
-    /* 項目どうしのすき間を 24px あける */
-    gap: 24px;
+    /* 項目どうしのすき間を 32px あける */
+    gap: 32px;
     /* 画面が狭くて入りきらないときは、次の行に折り返す */
     flex-wrap: wrap;
     /* リストの先頭に付く「・」を消す */
@@ -125,6 +178,20 @@ nav ul {
     /* ul にブラウザが最初から付けている余白（左の字下げなど）を消す */
     margin: 0;
     padding: 0;
+}
+
+/* メニューのリンク: 小さめの文字で字間を広げ、すっきり見せる */
+nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.875rem;
+    /* letter-spacing: 文字と文字のあいだ。em は「今の文字サイズの何倍か」 */
+    letter-spacing: 0.15em;
+}
+
+/* マウスを乗せたときだけ下線を出して、押せることがわかるようにする */
+nav a:hover {
+    text-decoration: underline;
 }
 
 
@@ -192,6 +259,8 @@ nav ul {
 /* 詳細ページ全体: 1行が長すぎると読みにくいので、最大の幅を決めておく */
 .work-detail {
     max-width: 720px;
+    /* ヘッダーとのあいだを少しあける */
+    padding-top: 48px;
 }
 
 /* 「非公式の改善提案（学生の制作）」の注意書き: 小さい文字で枠を付けて目立たせる */
@@ -202,12 +271,13 @@ nav ul {
     border: 1px solid currentColor;
     border-radius: 4px;
     padding: 2px 8px;
-    /* ほかのセクションの h2 と同じく、上を 96px あける */
-    margin: 96px 0 0;
+    /* 上の余白は .work-detail の padding で足りるので、なしにする */
+    margin: 0;
 }
 
-/* 注意書きのすぐ後ろの h2 は、注意書きとくっつくように上の余白を減らす */
-.work-note + h2 {
+/* 注意書きのすぐ後ろの h1（作品名）は、注意書きとのあいだを少しあける */
+/* A + B は「A のすぐ後ろにある B」という意味 */
+.work-note + h1 {
     margin-top: 16px;
 }
 
@@ -275,9 +345,21 @@ nav ul {
    ダークモード切替ボタン
    =========================================== */
 
-/* 切替ボタン: メニューとくっつかないように上に余白をあける */
+/* 切替ボタン: 角の丸い小さなボタンにして、ヘッダーになじませる */
 #theme-toggle {
-    margin-top: 16px;
+    /* ボタンは文字の設定を継承しないので、inherit でページと同じフォントにする */
+    font: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 4px 14px;
+    color: var(--color-text);
+    /* transparent: 透明。ヘッダーの背景がそのまま見える */
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    /* 999px のように大きな値にすると、左右が半円になる */
+    border-radius: 999px;
+    /* マウスを乗せたとき、指の形のカーソルにする */
+    cursor: pointer;
 }
 
 
@@ -290,8 +372,20 @@ nav ul {
 
     /* ページ全体: 画面が狭いので、左右の余白を減らして文章の幅を広く使う */
     body {
-        /* 上下 16px・左右 16px */
-        padding: 16px;
+        /* 上は「ヘッダーの高さ 72px + 16px」、左右と下は 16px */
+        padding: 88px 16px 16px;
+    }
+
+    /* ヘッダー: 左右の余白とすき間を詰める */
+    .site-header {
+        padding: 0 16px;
+        gap: 16px;
+    }
+
+    /* ロゴの「Saku Murayama」の文字: 横幅が足りないので隠して、月の画像だけにする */
+    /* display: none: その要素を表示しない（場所も取らない） */
+    .site-name {
+        display: none;
     }
 
     /* h1: 32px だとスマホでは大きすぎて折り返しやすいので小さくする */
@@ -316,8 +410,13 @@ nav ul {
 
     /* メニュー: 項目どうしのすき間を詰めて、1行に収まりやすくする */
     nav ul {
-        /* 横のすき間 24px → 16px */
+        /* 横のすき間 32px → 16px */
         gap: 16px;
+    }
+
+    /* メニューの字間を少し詰めて、1行に収まるようにする */
+    nav a {
+        letter-spacing: 0.08em;
     }
 
     /* メニューのリンク: 指でタップしやすいように、押せる範囲を広げる */
