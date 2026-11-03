@@ -9,6 +9,7 @@ import Footer from './components/Footer.jsx'
 
 // ページを pages フォルダから読み込む
 import HomePage from './pages/HomePage.jsx'
+import WorkDetailPage from './pages/WorkDetailPage.jsx'
 
 // App: ページ全体を組み立てる部品（コンポーネント）
 // ヘッダーとフッターはどのページでも共通。真ん中（main）だけを URL で切り替える
@@ -46,6 +47,9 @@ function App() {
         <Routes>
           {/* path="/" のとき（トップ）は HomePage を表示する */}
           <Route path="/" element={<HomePage />} />
+          {/* :slug は「ここには作品ごとにちがう名前が入る」という目印 */}
+          {/* /works/mcflow も /works/portfolio も、このページで表示する */}
+          <Route path="/works/:slug" element={<WorkDetailPage />} />
         </Routes>
       </main>
 
