@@ -31,7 +31,7 @@ function Works() {
     // 作品セクション
     // 注意: CSS の Grid は「#works の直下」の要素を並べるので、カードを余計な div で囲まない
     <section id="works">
-      <h2>作品</h2>
+      <h2 className="section-title">Works</h2>
 
       {/* div: 意味を持たないただの箱。ここでは絞り込みボタンをまとめるために使う */}
       {/* JSX では class ではなく className と書く */}

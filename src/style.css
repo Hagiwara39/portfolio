@@ -1,4 +1,42 @@
 /* ===========================================
+   色の変数（CSS 変数）
+   =========================================== */
+
+/* :root: ページ全体（html）のこと。ここで決めた変数は、どこからでも使える */
+/* --名前: 値 で変数を作り、使うときは var(--名前) と書く */
+/* 色をここにまとめておくと、色を変えたいときにここだけ直せばよい */
+:root {
+    /* 背景の色 */
+    --color-bg: #fff;
+    /* 文字の色（白の背景に対してコントラスト比 約15.9） */
+    --color-text: #222;
+    /* アクセントのゴールド。白の背景の上では文字に使わない（コントラスト比が 約1.7 で足りない） */
+    --color-accent: #D3C0A2;
+    /* 枠線や区切り線の色 */
+    --color-border: #ddd;
+    /* リンクの色（白の背景に対してコントラスト比 約8.5） */
+    --color-link: #0645ad;
+    /* ボタンや入力欄の枠線: 「ここを押せる・ここに書ける」がわかるよう、区切り線より濃くする */
+    --color-control-border: #767676;
+    /* サムネイルや顔写真のダミー枠の仮の色（ゴールドを薄くした色） */
+    --color-placeholder: #efe9df;
+}
+
+/* ダークモード: 変数の中身だけを入れ替える。var(--color-bg) などを使っている所は全部自動で切り替わる */
+body.dark {
+    /* 背景 #222 に文字 #f4f4f4 で、コントラスト比 約14.4 */
+    --color-bg: #222;
+    --color-text: #f4f4f4;
+    /* 薄いグレーの枠線は暗い背景だと目立ちすぎるので暗めにする */
+    --color-border: #444;
+    /* 濃い青は暗い背景で読みにくいので、明るい青にする（コントラスト比 約7.6） */
+    --color-link: #8ab4f8;
+    --color-control-border: #8a8a8a;
+    --color-placeholder: #3a3a3a;
+}
+
+
+/* ===========================================
    ページ全体の基本設定
    =========================================== */
 
@@ -6,18 +44,31 @@
 body {
     /* 文字の基本サイズ。16px はブラウザの標準で、読みやすい大きさ */
     font-size: 16px;
-    /* 文字の色。真っ黒(#000)より少しやわらかい濃いグレーにして目に優しくする */
-    color: #333;
-    /* 背景の色。白。ダークモードとの切り替えがわかるように、はっきり指定しておく */
-    background-color: #fff;
+    /* 文字の色と背景の色。変数を使うので、ダークモードでは自動で切り替わる */
+    color: var(--color-text);
+    background-color: var(--color-bg);
     /* 行間。文字サイズの1.8倍の高さを1行にする（単位なしで書くのがおすすめ） */
     line-height: 1.8;
     /* 文字の種類。左から順に探して、パソコンにある最初のフォントを使う */
-    font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+    /* Inter には日本語の文字がないので、英字は Inter、日本語はその次の Hiragino Sans などで表示される */
+    font-family: "Inter", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
     /* 外側の余白。ブラウザが最初から付けている 8px を消す */
     margin: 0;
-    /* 内側の余白。上下 24px・左右 20px あけて、文字が画面の端にくっつかないようにする */
-    padding: 24px 20px;
+    /* 内側の余白。左右 64px あけて、広めにゆったり見せる */
+    /* 上は「固定ヘッダーの高さ 72px + 32px」。ヘッダーの下に中身が隠れないようにする */
+    padding: 104px 64px 32px;
+}
+
+/* id の付いた section（About / Works / Contact）: メニューで移動したときに止まる位置を調整する */
+/* scroll-margin-top: 「ここまでスクロールして」と言われたとき、上にこの分だけすき間を残す */
+/* 固定ヘッダー(72px)の下に見出しが隠れないよう、ヘッダーより少し大きくする */
+section[id] {
+    scroll-margin-top: 96px;
+}
+
+/* リンクの色 */
+a {
+    color: var(--color-link);
 }
 
 
@@ -40,8 +91,30 @@ h2 {
     /* 1.5rem = 24px */
     font-size: 1.5rem;
     line-height: 1.4;
-    /* 上に 48px あけてセクションの区切りをわかりやすくし、下に 16px */
-    margin: 48px 0 16px;
+    /* 上に 96px あけてセクションの区切りをゆったり見せ、下に 24px */
+    margin: 96px 0 24px;
+}
+
+/* セクションの見出し（About / Works / Contact）: 文字の右に細い線を伸ばす */
+.section-title {
+    /* Flexbox で「文字」と「線」を横に並べ、上下のまん中にそろえる */
+    display: flex;
+    align-items: center;
+    /* 文字と線のあいだ */
+    gap: 24px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+/* ::after: 見出しの文字の「後ろ」に、HTML に書かずに飾りを足す */
+.section-title::after {
+    /* content: 足す中身。ここでは文字なし（線だけにする） */
+    content: "";
+    /* flex: 1 で、残りの幅を全部使って右端まで伸ばす */
+    flex: 1;
+    /* 高さ 1px の箱に色を塗って、細い線に見せる */
+    height: 1px;
+    background-color: var(--color-border);
 }
 
 /* h3: 作品タイトルなどの小見出し */
@@ -72,15 +145,60 @@ small {
 
 
 /* ===========================================
-   ヘッダーのメニュー（Flexbox で横並び）
+   ヘッダー（上に固定・Flexbox で横並び）
    =========================================== */
+
+/* ヘッダー全体: ロゴ・メニュー・ボタンを横一列に並べる */
+.site-header {
+    /* position: fixed: 画面に貼り付けて、スクロールしても動かないようにする */
+    position: fixed;
+    /* 画面の上・左・右の端にくっつける（横いっぱいに広がる） */
+    top: 0;
+    left: 0;
+    right: 0;
+    /* z-index: 重なりの順番。大きいほど手前。中身がヘッダーの上に重ならないようにする */
+    z-index: 10;
+    height: 72px;
+    /* 中身を横に並べ、上下のまん中にそろえる */
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    /* 左右の余白はページ（body）とそろえる */
+    padding: 0 64px;
+    /* 背景を塗っておかないと、下の文字が透けて見える */
+    background-color: var(--color-bg);
+    /* 下に薄いグレーの線 */
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* ロゴ（月の画像と名前）: 画像と文字を横に並べる */
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* リンクの青色と下線をやめる */
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ロゴの画像: 高さを 30px にする。幅は auto で、縦横の比率を保ったまま決まる */
+.site-logo img {
+    height: 30px;
+    width: auto;
+}
+
+/* nav: margin-left: auto で左側の余白を全部もらい、メニューとボタンを右に寄せる */
+.site-header nav {
+    margin-left: auto;
+}
 
 /* nav の中の ul: メニュー項目を並べる箱 */
 nav ul {
     /* Flexbox を使う宣言。中の li が横一列に並ぶようになる */
     display: flex;
-    /* 項目どうしのすき間を 24px あける */
-    gap: 24px;
+    /* 項目どうしのすき間を 32px あける */
+    gap: 32px;
     /* 画面が狭くて入りきらないときは、次の行に折り返す */
     flex-wrap: wrap;
     /* リストの先頭に付く「・」を消す */
@@ -88,6 +206,136 @@ nav ul {
     /* ul にブラウザが最初から付けている余白（左の字下げなど）を消す */
     margin: 0;
     padding: 0;
+}
+
+/* メニューのリンク: 小さめの文字で字間を広げ、すっきり見せる */
+nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.875rem;
+    /* letter-spacing: 文字と文字のあいだ。em は「今の文字サイズの何倍か」 */
+    letter-spacing: 0.15em;
+}
+
+/* マウスを乗せたときだけ下線を出して、押せることがわかるようにする */
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+/* ===========================================
+   Hero（トップの黒いカード）
+   =========================================== */
+
+/* カード全体: 左に文字、右に月を横に並べる */
+/* 左右の 64px の余白は body の padding で付いている */
+.hero {
+    display: flex;
+    /* 上下のまん中にそろえる */
+    align-items: center;
+    /* 文字は左端、月は右端に寄せる */
+    justify-content: space-between;
+    gap: 48px;
+    /* カードの内側の余白 */
+    padding: 80px 72px;
+    /* 角を大きく丸くする */
+    border-radius: 28px;
+    /* linear-gradient: 色が少しずつ変わる背景（グラデーション） */
+    /* to bottom right: 左上から右下へ。左上が #3a3a3a で、まん中(50%)から先は #222 */
+    background: linear-gradient(to bottom right, #3a3a3a, #222 50%);
+    /* カードはライトモードでも黒いので、文字の色は変数を使わず明るい色に決めておく */
+    color: #f4f4f4;
+}
+
+/* 小さいラベル「PORTFOLIO 2024 — 2026」: ゴールドで字間をかなり広げる */
+/* ゴールドの文字は暗い背景の上なら読める（#3a3a3a に対してコントラスト比 約6.4） */
+.hero-label {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 24px;
+}
+
+/* キャッチコピー: 大きく、細めの太さにする */
+.hero-title {
+    /* clamp(最小, なりたい大きさ, 最大): 画面の幅に合わせて大きさを変える */
+    /* 6vw は「画面の幅の 6%」。ただし 32px より小さく、64px より大きくはならない */
+    font-size: clamp(32px, 6vw, 64px);
+    /* font-weight: 文字の太さ。400 がふつう、300 は細め */
+    font-weight: 300;
+    /* 大きい文字は行間を詰めたほうがまとまって見える */
+    line-height: 1.15;
+    margin: 0 0 32px;
+}
+
+/* キャッチコピーの中のゴールドにする言葉 */
+.hero-accent {
+    color: var(--color-accent);
+}
+
+/* ゴールドの短い線: 中身のない箱に幅・高さ・背景色を付けて線に見せる */
+.hero-line {
+    width: 64px;
+    height: 2px;
+    background-color: var(--color-accent);
+    margin-bottom: 24px;
+}
+
+/* 名前 */
+.hero-name {
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+/* 肩書き: 薄いグレーで小さめに（#3a3a3a に対してコントラスト比 約6.1） */
+.hero-role {
+    color: #bdbdbd;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* 月の画像: 幅 360px。画面が狭いときはカードの 40% までに抑える */
+.hero-moon {
+    width: 360px;
+    max-width: 40%;
+    /* 高さは auto で、縦横の比率を保ったまま決まる */
+    height: auto;
+}
+
+/* ダークモードの Hero: ページの背景もカードの右下も #222 で境目が消えるので、細い枠線を付ける */
+/* --color-border はダークモードでは #444 になる */
+body.dark .hero {
+    border: 1px solid var(--color-border);
+}
+
+
+/* ===========================================
+   自己紹介（顔写真と文章を横に並べる）
+   =========================================== */
+
+/* 顔写真と文章を横に並べる箱 */
+.about-body {
+    display: flex;
+    gap: 48px;
+    /* 上をそろえる（写真と文章の高さがちがっても、上の端がそろう） */
+    align-items: flex-start;
+}
+
+/* 顔写真用のダミー枠: 横4・縦5 の比率の箱に、仮の色を塗る */
+.about-photo {
+    width: 200px;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
+    background-color: var(--color-placeholder);
+    /* flex-shrink: 0: 文章が長くても、写真の枠が縮まないようにする */
+    flex-shrink: 0;
+}
+
+/* 文章の最後の段落: 下の余白はいらないので消す */
+/* :last-child は「その中で最後の要素」という意味 */
+.about-text p:last-child {
+    margin-bottom: 0;
 }
 
 
@@ -115,21 +363,33 @@ nav ul {
 
 /* 作品1つ分のカード */
 #works article {
-    /* カードの枠線。太さ1px・実線・薄いグレー */
-    border: 1px solid #ddd;
+    /* カードの枠線。太さ1px・実線・変数の枠線の色（ダークモードでは暗めになる） */
+    border: 1px solid var(--color-border);
     /* 角を少し丸くする */
     border-radius: 8px;
+    /* overflow: hidden: カードからはみ出した部分を隠す。サムネイルの角もカードに合わせて丸くなる */
+    overflow: hidden;
 }
 
 /* カードの中のリンク: カード全体を押せるようにする */
 #works article a {
     /* a は普段「文字の幅だけ」の要素なので、箱として扱ってカードいっぱいに広げる */
     display: block;
-    /* 枠線と中の文字のあいだの余白。a に付けると、余白の部分も押せる範囲になる */
-    padding: 20px;
     /* リンクの青い文字と下線をやめて、ふつうの文章と同じ見た目にする */
     color: inherit;
     text-decoration: none;
+}
+
+/* サムネイル用の枠: 横16・縦9 の比率の箱に、仮の色を塗る */
+.work-thumb {
+    /* aspect-ratio: 横と縦の比率。幅が変わっても、高さが自動で 16:9 になる */
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-placeholder);
+}
+
+/* カードの文字の部分: 枠線と文字のあいだの余白 */
+.work-card-body {
+    padding: 20px;
 }
 
 /* カードにマウスを乗せたとき: 押せることがわかるように、タイトルに下線を出す */
@@ -155,6 +415,8 @@ nav ul {
 /* 詳細ページ全体: 1行が長すぎると読みにくいので、最大の幅を決めておく */
 .work-detail {
     max-width: 720px;
+    /* ヘッダーとのあいだを少しあける */
+    padding-top: 48px;
 }
 
 /* 「非公式の改善提案（学生の制作）」の注意書き: 小さい文字で枠を付けて目立たせる */
@@ -165,12 +427,13 @@ nav ul {
     border: 1px solid currentColor;
     border-radius: 4px;
     padding: 2px 8px;
-    /* すぐ下の h2 の上の余白(48px)があるので、ここでは上だけあける */
-    margin: 48px 0 0;
+    /* 上の余白は .work-detail の padding で足りるので、なしにする */
+    margin: 0;
 }
 
-/* 注意書きのすぐ後ろの h2 は、注意書きとくっつくように上の余白を減らす */
-.work-note + h2 {
+/* 注意書きのすぐ後ろの h1（作品名）は、注意書きとのあいだを少しあける */
+/* A + B は「A のすぐ後ろにある B」という意味 */
+.work-note + h1 {
     margin-top: 16px;
 }
 
@@ -191,11 +454,26 @@ nav ul {
     flex-wrap: wrap;
 }
 
-/* 今選ばれているボタン: 色を反転させて、どれが選ばれているかわかるようにする */
+/* 絞り込みボタン: 角の丸い枠だけのボタンにする */
+.filter button {
+    /* ボタンは文字の設定を継承しないので、inherit でページと同じフォントにする */
+    font: inherit;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    padding: 6px 18px;
+    color: var(--color-text);
+    background-color: transparent;
+    border: 1px solid var(--color-control-border);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/* 今選ばれているボタン: 文字の色と背景の色を入れかえて、どれが選ばれているかわかるようにする */
+/* 変数を使うので、ダークモードでも自動で反転する */
 .filter button.is-active {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
 }
 
 
@@ -217,14 +495,35 @@ nav ul {
 .contact-form input,
 .contact-form textarea {
     font: inherit;
-    padding: 8px;
+    padding: 10px 12px;
+    /* 入力欄の色も変数にして、ダークモードでは暗い入力欄にする */
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-control-border);
+    border-radius: 8px;
 }
 
 /* 送信ボタン: 入力欄との間を少しあけ、横いっぱいに伸びないようにする */
+/* 文字の色と背景の色を入れかえた、目立つボタンにする */
 .contact-form button {
     margin-top: 8px;
     /* Flexbox の中で、自分だけ左寄せにする */
     align-self: flex-start;
+    font: inherit;
+    letter-spacing: 0.05em;
+    padding: 10px 32px;
+    color: var(--color-bg);
+    background-color: var(--color-text);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/* 送信中で押せないとき（disabled）: 少し薄くして、押せないことがわかるようにする */
+/* :disabled は「disabled が付いているとき」という意味 */
+.contact-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* 送信中・完了・失敗のメッセージ: gap があるので下の余白は消す */
@@ -237,32 +536,21 @@ nav ul {
    ダークモード切替ボタン
    =========================================== */
 
-/* 切替ボタン: メニューとくっつかないように上に余白をあける */
+/* 切替ボタン: 角の丸い小さなボタンにして、ヘッダーになじませる */
 #theme-toggle {
-    margin-top: 16px;
-}
-
-
-/* ===========================================
-   ダークモード（body に class="dark" が付いたときだけ効く）
-   =========================================== */
-
-/* body.dark: 「class に dark が付いている body」という意味 */
-body.dark {
-    /* 背景を暗いグレーに。真っ黒(#000)より少し明るいほうが目が疲れにくい */
-    background-color: #1e1e1e;
-    /* 文字を明るいグレーに。真っ白より少し落とすとまぶしくない */
-    color: #e0e0e0;
-}
-
-/* ダークモードのリンク: 標準の濃い青は暗い背景で読みにくいので、明るい青にする */
-body.dark a {
-    color: #8ab4f8;
-}
-
-/* ダークモードの作品カード: 薄いグレーの枠線は暗い背景だと目立ちすぎるので暗めにする */
-body.dark #works article {
-    border-color: #444;
+    /* ボタンは文字の設定を継承しないので、inherit でページと同じフォントにする */
+    font: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 4px 14px;
+    color: var(--color-text);
+    /* transparent: 透明。ヘッダーの背景がそのまま見える */
+    background-color: transparent;
+    border: 1px solid var(--color-control-border);
+    /* 999px のように大きな値にすると、左右が半円になる */
+    border-radius: 999px;
+    /* マウスを乗せたとき、指の形のカーソルにする */
+    cursor: pointer;
 }
 
 
@@ -275,8 +563,20 @@ body.dark #works article {
 
     /* ページ全体: 画面が狭いので、左右の余白を減らして文章の幅を広く使う */
     body {
-        /* 上下 16px・左右 16px */
-        padding: 16px;
+        /* 上は「ヘッダーの高さ 72px + 16px」、左右と下は 16px */
+        padding: 88px 16px 16px;
+    }
+
+    /* ヘッダー: 左右の余白とすき間を詰める */
+    .site-header {
+        padding: 0 16px;
+        gap: 16px;
+    }
+
+    /* ロゴの「Saku Murayama」の文字: 横幅が足りないので隠して、月の画像だけにする */
+    /* display: none: その要素を表示しない（場所も取らない） */
+    .site-name {
+        display: none;
     }
 
     /* h1: 32px だとスマホでは大きすぎて折り返しやすいので小さくする */
@@ -289,8 +589,8 @@ body.dark #works article {
     h2 {
         /* 1.25rem = 20px */
         font-size: 1.25rem;
-        /* 上の余白を 48px → 36px に */
-        margin-top: 36px;
+        /* 上の余白を 96px → 64px に */
+        margin-top: 64px;
     }
 
     /* h3: 作品タイトルを少し小さくする */
@@ -301,8 +601,33 @@ body.dark #works article {
 
     /* メニュー: 項目どうしのすき間を詰めて、1行に収まりやすくする */
     nav ul {
-        /* 横のすき間 24px → 16px */
+        /* 横のすき間 32px → 16px */
         gap: 16px;
+    }
+
+    /* メニューの字間を少し詰めて、1行に収まるようにする */
+    nav a {
+        letter-spacing: 0.08em;
+    }
+
+    /* Hero: 横並びをやめて縦に並べる */
+    /* column-reverse: 縦に並べて、順番を逆にする。HTML では文字→月の順なので、月が上になる */
+    /* 左右の 16px の余白は body の padding で付いている */
+    .hero {
+        flex-direction: column-reverse;
+        /* 文字は左にそろえる（月は下の .hero-moon でまん中にする） */
+        align-items: flex-start;
+        gap: 32px;
+        /* カードの内側の余白も小さくする */
+        padding: 40px 24px;
+    }
+
+    /* 月の画像: 小さくして、自分だけまん中に置く */
+    .hero-moon {
+        width: 200px;
+        max-width: 70%;
+        /* align-self: 自分だけ並べ方を変える */
+        align-self: center;
     }
 
     /* メニューのリンク: 指でタップしやすいように、押せる範囲を広げる */
@@ -313,8 +638,19 @@ body.dark #works article {
         padding: 8px 0;
     }
 
-    /* 作品カード: カードの内側の余白を少し減らす（余白は中のリンクに付けている） */
-    #works article a {
+    /* 作品カード: 文字のまわりの余白を少し減らす */
+    .work-card-body {
         padding: 16px;
+    }
+
+    /* 自己紹介: 横並びをやめて、写真の下に文章を並べる */
+    .about-body {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* 顔写真の枠を少し小さくする */
+    .about-photo {
+        width: 160px;
     }
 }
