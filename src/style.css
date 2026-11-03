@@ -196,6 +196,86 @@ nav a:hover {
 
 
 /* ===========================================
+   Hero（トップの黒いカード）
+   =========================================== */
+
+/* カード全体: 左に文字、右に月を横に並べる */
+/* 左右の 64px の余白は body の padding で付いている */
+.hero {
+    display: flex;
+    /* 上下のまん中にそろえる */
+    align-items: center;
+    /* 文字は左端、月は右端に寄せる */
+    justify-content: space-between;
+    gap: 48px;
+    /* カードの内側の余白 */
+    padding: 80px 72px;
+    /* 角を大きく丸くする */
+    border-radius: 28px;
+    /* linear-gradient: 色が少しずつ変わる背景（グラデーション） */
+    /* to bottom right: 左上から右下へ。左上が #3a3a3a で、まん中(50%)から先は #222 */
+    background: linear-gradient(to bottom right, #3a3a3a, #222 50%);
+    /* カードはライトモードでも黒いので、文字の色は変数を使わず明るい色に決めておく */
+    color: #f4f4f4;
+}
+
+/* 小さいラベル「PORTFOLIO 2024 — 2026」: ゴールドで字間をかなり広げる */
+/* ゴールドの文字は暗い背景の上なら読める（#3a3a3a に対してコントラスト比 約6.4） */
+.hero-label {
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 24px;
+}
+
+/* キャッチコピー: 大きく、細めの太さにする */
+.hero-title {
+    /* 4rem = 64px */
+    font-size: 4rem;
+    /* font-weight: 文字の太さ。400 がふつう、300 は細め */
+    font-weight: 300;
+    /* 大きい文字は行間を詰めたほうがまとまって見える */
+    line-height: 1.15;
+    margin: 0 0 32px;
+}
+
+/* キャッチコピーの中のゴールドにする言葉 */
+.hero-accent {
+    color: var(--color-accent);
+}
+
+/* ゴールドの短い線: 中身のない箱に幅・高さ・背景色を付けて線に見せる */
+.hero-line {
+    width: 64px;
+    height: 2px;
+    background-color: var(--color-accent);
+    margin-bottom: 24px;
+}
+
+/* 名前 */
+.hero-name {
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+/* 肩書き: 薄いグレーで小さめに（#3a3a3a に対してコントラスト比 約6.1） */
+.hero-role {
+    color: #bdbdbd;
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* 月の画像: 幅 360px。画面が狭いときはカードの 40% までに抑える */
+.hero-moon {
+    width: 360px;
+    max-width: 40%;
+    /* 高さは auto で、縦横の比率を保ったまま決まる */
+    height: auto;
+}
+
+
+/* ===========================================
    作品一覧（Grid でカードを並べる）
    =========================================== */
 
