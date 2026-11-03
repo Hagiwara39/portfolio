@@ -89,6 +89,28 @@ h2 {
     margin: 96px 0 24px;
 }
 
+/* セクションの見出し（About / Works / Contact）: 文字の右に細い線を伸ばす */
+.section-title {
+    /* Flexbox で「文字」と「線」を横に並べ、上下のまん中にそろえる */
+    display: flex;
+    align-items: center;
+    /* 文字と線のあいだ */
+    gap: 24px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+/* ::after: 見出しの文字の「後ろ」に、HTML に書かずに飾りを足す */
+.section-title::after {
+    /* content: 足す中身。ここでは文字なし（線だけにする） */
+    content: "";
+    /* flex: 1 で、残りの幅を全部使って右端まで伸ばす */
+    flex: 1;
+    /* 高さ 1px の箱に色を塗って、細い線に見せる */
+    height: 1px;
+    background-color: var(--color-border);
+}
+
 /* h3: 作品タイトルなどの小見出し */
 h3 {
     /* 1.25rem = 20px */
