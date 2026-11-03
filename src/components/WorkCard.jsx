@@ -11,9 +11,16 @@ function WorkCard({ slug, title, description }) {
       {/* `/works/${slug}` は「文字の中に変数を埋め込む」書き方（テンプレート文字列） */}
       {/* slug が 'mcflow' なら '/works/mcflow' になる */}
       <Link to={`/works/${slug}`}>
-        {/* { } の中は JavaScript。受け取った title をここに表示する */}
-        <h3>{title}</h3>
-        <p>{description}</p>
+        {/* サムネイル用の枠。今は仮の色だけ。あとで画像に入れかえる */}
+        {/* aria-hidden="true": 中身のない飾りなので、読み上げソフトに無視させる */}
+        <div className="work-thumb" aria-hidden="true"></div>
+
+        {/* 文字の部分をまとめる箱。サムネイルは端まで広げ、文字のまわりにだけ余白を付けるために分ける */}
+        <div className="work-card-body">
+          {/* { } の中は JavaScript。受け取った title をここに表示する */}
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </div>
       </Link>
     </article>
   )

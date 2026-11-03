@@ -16,6 +16,10 @@
     --color-border: #ddd;
     /* リンクの色（白の背景に対してコントラスト比 約8.5） */
     --color-link: #0645ad;
+    /* ボタンや入力欄の枠線: 「ここを押せる・ここに書ける」がわかるよう、区切り線より濃くする */
+    --color-control-border: #767676;
+    /* サムネイルや顔写真のダミー枠の仮の色（ゴールドを薄くした色） */
+    --color-placeholder: #efe9df;
 }
 
 /* ダークモード: 変数の中身だけを入れ替える。var(--color-bg) などを使っている所は全部自動で切り替わる */
@@ -27,6 +31,8 @@ body.dark {
     --color-border: #444;
     /* 濃い青は暗い背景で読みにくいので、明るい青にする（コントラスト比 約7.6） */
     --color-link: #8ab4f8;
+    --color-control-border: #8a8a8a;
+    --color-placeholder: #3a3a3a;
 }
 
 
@@ -252,8 +258,9 @@ nav a:hover {
 
 /* キャッチコピー: 大きく、細めの太さにする */
 .hero-title {
-    /* 4rem = 64px */
-    font-size: 4rem;
+    /* clamp(最小, なりたい大きさ, 最大): 画面の幅に合わせて大きさを変える */
+    /* 6vw は「画面の幅の 6%」。ただし 32px より小さく、64px より大きくはならない */
+    font-size: clamp(32px, 6vw, 64px);
     /* font-weight: 文字の太さ。400 がふつう、300 は細め */
     font-weight: 300;
     /* 大きい文字は行間を詰めたほうがまとまって見える */
@@ -304,6 +311,35 @@ body.dark .hero {
 
 
 /* ===========================================
+   自己紹介（顔写真と文章を横に並べる）
+   =========================================== */
+
+/* 顔写真と文章を横に並べる箱 */
+.about-body {
+    display: flex;
+    gap: 48px;
+    /* 上をそろえる（写真と文章の高さがちがっても、上の端がそろう） */
+    align-items: flex-start;
+}
+
+/* 顔写真用のダミー枠: 横4・縦5 の比率の箱に、仮の色を塗る */
+.about-photo {
+    width: 200px;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
+    background-color: var(--color-placeholder);
+    /* flex-shrink: 0: 文章が長くても、写真の枠が縮まないようにする */
+    flex-shrink: 0;
+}
+
+/* 文章の最後の段落: 下の余白はいらないので消す */
+/* :last-child は「その中で最後の要素」という意味 */
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ===========================================
    作品一覧（Grid でカードを並べる）
    =========================================== */
 
@@ -331,17 +367,29 @@ body.dark .hero {
     border: 1px solid var(--color-border);
     /* 角を少し丸くする */
     border-radius: 8px;
+    /* overflow: hidden: カードからはみ出した部分を隠す。サムネイルの角もカードに合わせて丸くなる */
+    overflow: hidden;
 }
 
 /* カードの中のリンク: カード全体を押せるようにする */
 #works article a {
     /* a は普段「文字の幅だけ」の要素なので、箱として扱ってカードいっぱいに広げる */
     display: block;
-    /* 枠線と中の文字のあいだの余白。a に付けると、余白の部分も押せる範囲になる */
-    padding: 20px;
     /* リンクの青い文字と下線をやめて、ふつうの文章と同じ見た目にする */
     color: inherit;
     text-decoration: none;
+}
+
+/* サムネイル用の枠: 横16・縦9 の比率の箱に、仮の色を塗る */
+.work-thumb {
+    /* aspect-ratio: 横と縦の比率。幅が変わっても、高さが自動で 16:9 になる */
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-placeholder);
+}
+
+/* カードの文字の部分: 枠線と文字のあいだの余白 */
+.work-card-body {
+    padding: 20px;
 }
 
 /* カードにマウスを乗せたとき: 押せることがわかるように、タイトルに下線を出す */
@@ -406,6 +454,20 @@ body.dark .hero {
     flex-wrap: wrap;
 }
 
+/* 絞り込みボタン: 角の丸い枠だけのボタンにする */
+.filter button {
+    /* ボタンは文字の設定を継承しないので、inherit でページと同じフォントにする */
+    font: inherit;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    padding: 6px 18px;
+    color: var(--color-text);
+    background-color: transparent;
+    border: 1px solid var(--color-control-border);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
 /* 今選ばれているボタン: 文字の色と背景の色を入れかえて、どれが選ばれているかわかるようにする */
 /* 変数を使うので、ダークモードでも自動で反転する */
 .filter button.is-active {
@@ -433,14 +495,35 @@ body.dark .hero {
 .contact-form input,
 .contact-form textarea {
     font: inherit;
-    padding: 8px;
+    padding: 10px 12px;
+    /* 入力欄の色も変数にして、ダークモードでは暗い入力欄にする */
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-control-border);
+    border-radius: 8px;
 }
 
 /* 送信ボタン: 入力欄との間を少しあけ、横いっぱいに伸びないようにする */
+/* 文字の色と背景の色を入れかえた、目立つボタンにする */
 .contact-form button {
     margin-top: 8px;
     /* Flexbox の中で、自分だけ左寄せにする */
     align-self: flex-start;
+    font: inherit;
+    letter-spacing: 0.05em;
+    padding: 10px 32px;
+    color: var(--color-bg);
+    background-color: var(--color-text);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/* 送信中で押せないとき（disabled）: 少し薄くして、押せないことがわかるようにする */
+/* :disabled は「disabled が付いているとき」という意味 */
+.contact-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* 送信中・完了・失敗のメッセージ: gap があるので下の余白は消す */
@@ -463,7 +546,7 @@ body.dark .hero {
     color: var(--color-text);
     /* transparent: 透明。ヘッダーの背景がそのまま見える */
     background-color: transparent;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-control-border);
     /* 999px のように大きな値にすると、左右が半円になる */
     border-radius: 999px;
     /* マウスを乗せたとき、指の形のカーソルにする */
@@ -539,13 +622,6 @@ body.dark .hero {
         padding: 40px 24px;
     }
 
-    /* キャッチコピー: 64px だとはみ出すので 32px にする */
-    /* 幅 375px のスマホでも「through UX Design」が1行に収まる大きさ */
-    .hero-title {
-        /* 2rem = 32px */
-        font-size: 2rem;
-    }
-
     /* 月の画像: 小さくして、自分だけまん中に置く */
     .hero-moon {
         width: 200px;
@@ -562,8 +638,19 @@ body.dark .hero {
         padding: 8px 0;
     }
 
-    /* 作品カード: カードの内側の余白を少し減らす（余白は中のリンクに付けている） */
-    #works article a {
+    /* 作品カード: 文字のまわりの余白を少し減らす */
+    .work-card-body {
         padding: 16px;
+    }
+
+    /* 自己紹介: 横並びをやめて、写真の下に文章を並べる */
+    .about-body {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* 顔写真の枠を少し小さくする */
+    .about-photo {
+        width: 160px;
     }
 }
