@@ -274,6 +274,12 @@ nav a:hover {
     height: auto;
 }
 
+/* ダークモードの Hero: ページの背景もカードの右下も #222 で境目が消えるので、細い枠線を付ける */
+/* --color-border はダークモードでは #444 になる */
+body.dark .hero {
+    border: 1px solid var(--color-border);
+}
+
 
 /* ===========================================
    作品一覧（Grid でカードを並べる）
@@ -497,6 +503,33 @@ nav a:hover {
     /* メニューの字間を少し詰めて、1行に収まるようにする */
     nav a {
         letter-spacing: 0.08em;
+    }
+
+    /* Hero: 横並びをやめて縦に並べる */
+    /* column-reverse: 縦に並べて、順番を逆にする。HTML では文字→月の順なので、月が上になる */
+    /* 左右の 16px の余白は body の padding で付いている */
+    .hero {
+        flex-direction: column-reverse;
+        /* 文字は左にそろえる（月は下の .hero-moon でまん中にする） */
+        align-items: flex-start;
+        gap: 32px;
+        /* カードの内側の余白も小さくする */
+        padding: 40px 24px;
+    }
+
+    /* キャッチコピー: 64px だとはみ出すので 32px にする */
+    /* 幅 375px のスマホでも「through UX Design」が1行に収まる大きさ */
+    .hero-title {
+        /* 2rem = 32px */
+        font-size: 2rem;
+    }
+
+    /* 月の画像: 小さくして、自分だけまん中に置く */
+    .hero-moon {
+        width: 200px;
+        max-width: 70%;
+        /* align-self: 自分だけ並べ方を変える */
+        align-self: center;
     }
 
     /* メニューのリンク: 指でタップしやすいように、押せる範囲を広げる */
