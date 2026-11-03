@@ -17,7 +17,7 @@ function About() {
         <div className="about-text">
           {/* p: 段落（ひとまとまりの文章） */}
           {/* br: 改行。JSX では <br /> のように最後に / を付けて閉じる */}
-          <p>はじめまして！<br/>芝浦工業大学 3年の村山 朔といいます。U/UXデザイナー、デザインエンジニアを目指しています。<br />
+          <p>はじめまして！<br/>芝浦工業大学 3年の村山 朔といいます。UI/UXデザイナー、デザインエンジニアを目指しています。<br />
             デザイン工学部に所属しており、UI/UXデザインやプログラミングなど幅広く学んでいます！</p>
           <p>Webプログラミングを勉強中です。HTML / CSS / JavaScript / Reactを学んでいます。</p>
           <p>Skills：Figma / Illustrator / Photoshop / PremierePro / Fusion / Arduino / Git / GitHub </p>
